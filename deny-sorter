@@ -17,7 +17,7 @@ cat /var/tmp/learner/deny.archive |  while read line; do
         echo "$line" > /var/tmp/learner/"$lock".lock ;
 done
 
-cat /var/tmp/learner/*lock | sort -u > /var/tmp/learner/lock.dat
+cat /var/tmp/learner/*lock /var/tmp/learner/.*lock  | sort -u > /var/tmp/learner/lock.dat
 
 join -v 1 <(sort /var/log/net.log) <(sort /var/tmp/learner/lock.dat) | sort -u > /var/tmp/learner/new.deny
 cat /var/tmp/learner/new.deny >> /var/log/new-deny.log
