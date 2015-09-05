@@ -21,8 +21,3 @@ cat /var/tmp/learner/*lock | sort -u > /var/tmp/learner/lock.dat
 
 join -v 1 <(sort /var/log/net.log) <(sort /var/tmp/learner/lock.dat) | sort -u > /var/tmp/learner/new.deny
 cat /var/tmp/learner/new.deny >> /var/log/new-deny.log
-
-cat /var/tmp/learner/deny.log | while read line; do
-        grep -v "$line" /var/tmp/learner/deny.in >> /var/tmp/learner/holding
-        cp /var/tmp/learner/holding /var/tmp/learner/deny.in
-done
