@@ -1,0 +1,4 @@
+#!/bin/sh
+# Kill the pattern-learner daemon child processes
+ps -ef | grep "log=/var/tmp/learner/learner-watcher.log" | grep -v grep | awk '{print $2}' | xargs kill -9
+ps -ef | grep "log=/var/tmp/learner/learner-child.log" | grep -v grep | awk '{print $2}' | xargs kill -9
