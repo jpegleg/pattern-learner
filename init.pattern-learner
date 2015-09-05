@@ -1,0 +1,50 @@
+#!/bin/sh
+# Init script for pattern-learner.
+case "$1" in
+stop)
+ps -ef | grep "log=/var/tmp/learner/learner-watcher.log" | grep -v grep | awk '{print $2}' | xargs kill -9
+ps -ef | grep "log=/var/tmp/learner/learner-child.log" | grep -v grep | awk '{print $2}' | xargs kill -9
+;;
+start)
+echo "Daemonizing"
+if [ whoami == root ]; then
+sec.pl --input=/var/log/net.log --conf=/etc/learner.cfg --log=/var/tmp/learner/learner-child.log --debug=6 --detach
+sec.pl --input=/var/log/new-deny.log --conf=/etc/learner-watcher.cfg --log=/var/tmp/learner/learner-watcher.log --debug=6 --detach
+  echo "Daemonized learner-watcher with the pid of:";
+  ps -ef | grep "log=/var/tmp/learner/learner-watcher.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
+  echo "Daemonized learner with the pid of:";
+  ps -ef | grep "log=/var/tmp/learner/learner.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
+else
+sudo sec.pl --input=/var/log/net.log --conf=/etc/learner.cfg --log=/var/tmp/learner/learner-child.log --debug=6 --detach
+sudo sec.pl --input=/var/log/new-deny.log --conf=/etc/learner-watcher.cfg --log=/var/tmp/learner/learner-watcher.log --debug=6 --detach
+  echo "Daemonized learner-watcher with the pid of:";
+  ps -ef | grep "log=/var/tmp/learner/learner-watcher.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
+  echo "Daemonized learner with the pid of:";
+  ps -ef | grep "log=/var/tmp/learner/learner.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
+fi
+;;
+restart)
+ps -ef | grep "log=/var/tmp/learner/learner-watcher.log" | grep -v grep | awk '{print $2}' | xargs kill -9
+ps -ef | grep "log=/var/tmp/learner/learner-child.log" | grep -v grep | awk '{print $2}' | xargs kill -9
+echo "Daemonizing"
+if [ whoami == root ]; then
+sec.pl --input=/var/log/net.log --conf=/etc/learner.cfg --log=/var/tmp/learner/learner-child.log --debug=6 --detach
+sec.pl --input=/var/log/new-deny.log --conf=/etc/learner-watcher.cfg --log=/var/tmp/learner/learner-watcher.log --debug=6 --detach
+  echo "Daemonized learner-watcher with the pid of:";
+  ps -ef | grep "log=/var/tmp/learner/learner-watcher.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
+  echo "Daemonized learner with the pid of:";
+  ps -ef | grep "log=/var/tmp/learner/learner.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
+else
+sudo sec.pl --input=/var/log/net.log --conf=/etc/learner.cfg --log=/var/tmp/learner/learner-child.log --debug=6 --detach
+sudo sec.pl --input=/var/log/new-deny.log --conf=/etc/learner-watcher.cfg --log=/var/tmp/learner/learner-watcher.log --debug=6 --detach
+  echo "Daemonized learner-watcher with the pid of:";
+  ps -ef | grep "log=/var/tmp/learner/learner-watcher.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
+  echo "Daemonized learner with the pid of:";
+  ps -ef | grep "log=/var/tmp/learner/learner.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
+fi
+;;
+*)
+echo "Usage: init.pattern-learner option"
+echo "Options include: start, stop, restart"
+exit;
+esac
