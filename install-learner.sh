@@ -94,5 +94,4 @@ sudo sec.pl --input=/var/log/new-deny.log --conf=/etc/learner-watcher.cfg --log=
   ps -ef | grep "log=/var/tmp/learner/learner-watcher.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
   echo "Daemonized learner with the pid of:";
   ps -ef | grep "log=/var/tmp/learner/learner.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
-
 fi
