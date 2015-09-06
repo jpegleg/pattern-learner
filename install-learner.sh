@@ -7,6 +7,31 @@ else
   echo "Please install wget before running this script again."
   exit 1
 fi
+if [ -f /usr/local/bin/deny-sorter ] ; then
+  echo "Found /usr/local/bin/deny-sorter"
+else
+  echo "Looking for deny-sorter in $pwd"
+  ls ./deny-sorter
+  if [ whoami == root ]; then
+    echo "Running as root."
+    cp deny-sorter /usr/local/bin/
+    chmod +x /usr/local/bin/deny-sorter
+  else
+    echo "Running as $(whoami)";
+  cp deny-sorter /usr/local/bin/deny-sorter
+  if [ $? -eq 0 ]; then
+    echo "Configured sec as $(whoami)"
+  else
+    echo "Failed to configure deny-sorter as $(whoami).... trying sudo."
+    sudo cp deny-soter /usr/local/bin/
+    if [ $? -eq 0 ]; then
+    echo "Configured sec as $(whoami) with sudo."
+    else
+    echo "Could not install deny-soter, please run with permissions to write to /usr/local/bin"
+    fi
+    fi
+  fi
+fi
 if [ -f /usr/local/bin/sec.pl ] ; then
   echo "Found /usr/local/bin/sec.pl"
 else
