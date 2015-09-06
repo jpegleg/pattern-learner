@@ -44,7 +44,7 @@ sudo sec.pl --input=/var/log/new-deny.log --conf=/etc/learner-watcher.cfg --log=
 fi
 ;;
 *)
-echo "Usage: init.pattern-learner option"
+echo "Usage: pattern-learner option"
 echo "Options include: start, stop, restart"
 exit;
 esac
