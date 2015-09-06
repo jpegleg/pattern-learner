@@ -18,6 +18,8 @@ child process which sends each line as an email to root@localhost. Adjust that e
 
 /etc/learner-watcher.cfg
 
+The maximum locks ( known patterns ) will be different on each machine. I am working on a standardized lock file management system to add to this, but for now that is up to you.
+
 HOW TO INSTALL:
 ==============================================
 Download pattern-learner-installer.sh, example: 
