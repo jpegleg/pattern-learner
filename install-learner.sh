@@ -27,7 +27,7 @@ else
     if [ $? -eq 0 ]; then
     echo "Configured sec as $(whoami) with sudo."
     else
-    echo "Could not install deny-soter, please run with permissions to write to /usr/local/bin"
+    echo "Could not install deny-sorter, please run with permissions to write to /usr/local/bin"
     fi
     fi
   fi
