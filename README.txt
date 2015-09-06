@@ -12,7 +12,7 @@ also writes a lock file with the patterns contents. Those lock files are a way t
 the alerting in real time if you so desire; remove a lock file to trigger that pattern on the
 next match.
 
-Once the pattern is matched and no lock file exists, the data will be written to /var/log/new-deny.log
+Once the Deny pattern is matched excluding the archive of occurrences and no lock file exists, the data will be written to /var/log/new-deny.log
 This is a log which has every unique Deny pattern that has been found. This log is read by another sec.pl 
 child process which sends each line as an email to root@localhost. Adjust that email by editing the
 
