@@ -22,7 +22,7 @@ The maximum locks ( known patterns ) will be different on each machine. I am wor
 
 HOW TO INSTALL:
 ==============================================
-Download pattern-learner-installer.sh, example: 
+Download all of the files and then run the installer:
 
 And run the install script:
 chmod +x ./pattern-learner-installer.sh
