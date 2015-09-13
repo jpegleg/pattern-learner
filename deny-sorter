@@ -2,7 +2,7 @@
 # Search for unique Deny message and report new messages.
 mkdir -p /var/tmp/learner/ 2> /dev/null
 if [ -f /var/tmp/learner/lock-deny-sorter ]; then
-        exit 1
+        exit 0
 else
         touch /var/tmp/learner/lock-deny-sorter
         touch /var/tmp/learner/deny.log /var/tmp/learner/deny.last /var/tmp/learner/deny.dat /var/tmp/learner/lock.dat
