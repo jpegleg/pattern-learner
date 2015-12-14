@@ -1,96 +1,13 @@
 #!/bin/sh
 # Install pattern learner. The default pattern is Deny.
-which wget
-if [ $? -eq 0 ]; then
-  echo "Found wget, which we use to pull back down data from the web that gets deleted."
-else
-  echo "Please install wget before running this script again."
-  exit 1
-fi
-if [ -f /usr/local/bin/deny-sorter ] ; then
-  echo "Found /usr/local/bin/deny-sorter"
-else
-  echo "Looking for deny-sorter in $pwd"
-  ls ./deny-sorter
-  if [ whoami == root ]; then
-    echo "Running as root."
-    cp deny-sorter /usr/local/bin/
-    chmod +x /usr/local/bin/deny-sorter
-  else
-    echo "Running as $(whoami)";
-  cp deny-sorter /usr/local/bin/deny-sorter
-  if [ $? -eq 0 ]; then
-    echo "Configured sec as $(whoami)"
-  else
-    echo "Failed to configure deny-sorter as $(whoami).... trying sudo."
-    sudo cp deny-soter /usr/local/bin/
-    if [ $? -eq 0 ]; then
-    echo "Configured sec as $(whoami) with sudo."
-    else
-    echo "Could not install deny-sorter, please run with permissions to write to /usr/local/bin"
-    fi
-    fi
-  fi
-fi
-if [ -f /usr/local/bin/sec.pl ] ; then
-  echo "Found /usr/local/bin/sec.pl"
-else
-  echo "Installing /usr/local/bin/sec.pl"
-  wget http:/hyalitepress.com/sec
-  if [ whoami == root ]; then
-    echo "Running as root."
-    cp sec /usr/local/bin/sec.pl
-    chmod +x /usr/local/bin/sec.pl
-  else
-    echo "Running as $(whoami)";
-  cp sec /usr/local/bin/sec.pl
-  if [ $? -eq 0 ]; then
-    echo "Configured sec as $(whoami)"
-  else
-    echo "Failed to configure sec as $(whoami).... trying sudo."
-    sudo cp sec /usr/local/bin/sec.pl
-    if [ $? -eq 0 ]; then
-    echo "Configured sec as $(whoami) with sudo."
-    else
-    echo "Could not install sec.pl, please run with permissions to write to /usr/local/bin"
-    fi
-    fi
-  fi
-fi
-echo "Alright, now that we have the dependancies,  moving on to the hist-event-reaction configuration...."
-if [ whoami == root ]; then
-    echo "Running as root."
-    echo "Setting up directories..."
-    mkdir -p /var/tmp/learner
-    echo "Looking for learner.cfg"
-    ls learner.cfg
-    cp learner.cfg /etc/
-    echo "Configured learner.cfg"
-  else
-    echo "Running as $(whoami)";
-    echo "Setting up directories..."
-    mkdir -p /var/tmp/learner
-    echo "Looking for learner.cfg"
-    ls learner.cfg
-    sudo cp learner.cfg /etc/
-    echo "Configured learner.cfg"
 
-    if [ $? -eq 0 ]; then
-      echo "Set up directories as $(whoami)"
-    else
-      echo "Set up directories as $(whoami)"
-    else
-      echo "Couldn't set up directory /var/tmp/learner as $(whoami)."
-      echo "Trying sudo..."
-      sudo mkdir -p /var/tmp/learner/
-      if [ $? -eq 0 ]; then
-      echo "Set up directory as $(whoami) with sudo."
-      else
-      echo "Could not set up directory, please run with elevated permissions."
-      fi
-    fi
- fi
-echo "Looking for learner-watcher.cfg"
+echo "Running as $(whoami)";
+echo "Setting up directories..."
+mkdir -p /var/tmp/learner
+echo "Looking for learner.cfg"
+ls learner.cfg
+cp learner.cfg /etc/
+echo "Configured learner.cfg"
 ls learner-watcher.cfg
 cp learner-watcher.cfg /etc/
 if [ $? -eq 0 ]; then
