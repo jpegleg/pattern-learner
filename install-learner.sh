@@ -13,13 +13,7 @@ cp learner-watcher.cfg /etc/
 if [ $? -eq 0 ]; then
   echo "Located and install learner-watcher.cfg  as $(whoami)"
 else
-  echo "Failed to install learner-watcher.cfg  as $(whoami).... trying sudo."
-  sudo cp learner-watcher.cfg /etc/
-  if [ $? -eq 0 ]; then
-    echo "Found and installed learner-watcher.cfg  as $(whoami) with sudo."
-  else
-    echo "Could not install learner-watcher.cfg, please run with permissions to write to /etc/"
-  fi
+  echo "Failed to install learner-watcher.cfg  as $(whoami).... trying sudo." && exit 1
 fi
 echo "Daemonizing"
 if [ whoami == root ]; then
