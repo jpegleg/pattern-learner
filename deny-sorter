@@ -28,3 +28,4 @@ else
         cp /var/tmp/learner/lock.dat /var/log/net.log
         rm /var/tmp/learner/lock-deny-sorter
 fi
+ps aux | grep "/bin/bash /usr/local/bin/deny-sorter" | grep -v grep | awk '{print $2}' | xargs kill -9
