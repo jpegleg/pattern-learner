@@ -1,31 +1,32 @@
 #!/bin/bash
 # Search for unique Deny message and report new messages.
-mkdir -p /var/tmp/learner/ 2> /dev/null
-if [ -f /var/tmp/learner/lock-deny-sorter ]; then
+workdir=$workdir
+mkdir -p $workdir/ 2> /dev/null
+if [ -f $workdir/lock-deny-sorter ]; then
         exit 0
-else
-        touch /var/tmp/learner/lock-deny-sorter
-        touch /var/tmp/learner/deny.log /var/tmp/learner/deny.last /var/tmp/learner/deny.dat /var/tmp/learner/lock.dat
-        cp /var/tmp/learner/deny.log /var/tmp/learner/deny.last
-        cat /var/tmp/learner/deny.last >> /var/tmp/learner/deny.archive
-        sort -u /var/tmp/learner/deny.archive > /var/tmp/learner/deny.dat
-        grep Deny /var/log/net.log  > /var/tmp/learner/deny.log
-        sort -u /var/tmp/learner/deny.log > /var/tmp/learner/deny.tmp
-        cp /var/tmp/learner/deny.tmp /var/tmp/learner/deny.log
-        cp /var/tmp/learner/deny.last /var/tmp/learner/deny.in
-        cat /var/tmp/learner/deny.archive |  while read line; do
+else    
+        touch $workdir/lock-deny-sorter 
+        touch $workdir/deny.log $workdir/deny.last $workdir/deny.dat $workdir/lock.dat
+        cp $workdir/deny.log $workdir/deny.last
+        cat $workdir/deny.last >> $workdir/deny.archive
+        sort -u $workdir/deny.archive > $workdir/deny.dat
+        grep Deny /var/log/net.log  > $workdir/deny.log
+        sort -u $workdir/deny.log > $workdir/deny.tmp
+        cp $workdir/deny.tmp $workdir/deny.log
+        cp $workdir/deny.last $workdir/deny.in
+        cat $workdir/deny.archive |  while read line; do
                 lock=$(echo "$line" | tr -cd '[[:alnum:]]._-' );
-                touch /var/tmp/learner/"$lock".lock ;
-                echo "$line" > /var/tmp/learner/"$lock".lock ;
+                touch $workdir/"$lock".lock ;
+                echo "$line" > $workdir/"$lock".lock ;
         done
-        cat /var/tmp/learner/*lock | sort -u > /var/tmp/learner/lock.dat
+        cat $workdir/*lock | sort -u > $workdir/lock.dat
         sort -u /var/log/net.log > /var/log/net.tmp
         cp /var/log/net.tmp /var/log/net.log
-        sort -u /var/tmp/learner/lock.dat > /var/tmp/learner/lock.dat.tmp
-        cp /var/tmp/learner/lock.dat./tmp /var/tmp/learner/lock.dat
-        comm -23 /var/log/net.log /var/tmp/learner/lock.dat | sort -u > /var/tmp/learner/new.deny
-        cat /var/tmp/learner/new.deny >> /var/log/new-deny.log
-        cp /var/tmp/learner/lock.dat /var/log/net.log
-        rm /var/tmp/learner/lock-deny-sorter
+        sort -u $workdir/lock.dat > $workdir/lock.dat.tmp
+        cp $workdir/lock.dat./tmp $workdir/lock.dat
+        comm -23 /var/log/net.log $workdir/lock.dat | sort -u > $workdir/new.deny
+        cat $workdir/new.deny >> /var/log/new-deny.log
+        cp $workdir/lock.dat /var/log/net.log
+        rm $workdir/lock-deny-sorter
 fi
 ps aux | grep "/bin/bash /usr/local/bin/deny-sorter" | grep -v grep | awk '{print $2}' | xargs kill -9
