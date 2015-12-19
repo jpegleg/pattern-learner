@@ -1,6 +1,6 @@
 #!/bin/bash
 # Search for unique Deny message and report new messages.
-workdir=$workdir
+workdir=/var/tmp/learner/
 mkdir -p $workdir/ 2> /dev/null
 if [ -f $workdir/lock-deny-sorter ]; then
         exit 0
