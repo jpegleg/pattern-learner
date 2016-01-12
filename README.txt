@@ -1,4 +1,6 @@
 pattern-learner:
+Read the Simple Event Correlator documentation: https://simple-evcorr.github.io/
+
 A sec.pl and bash pattern learner which identifies unique occurrences in text lines for system alerting and auditing.
 
 The default pattern trigger is the following string:
