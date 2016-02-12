@@ -6,6 +6,8 @@ echo "Setting up directories..."
 mkdir -p /var/tmp/learner
 echo "Copying pattern-learner to /usr/local/bin"
 cp ./pattern-learner /usr/local/bin/
+echo "Copying pattern-sorter to /usr/local/bin"
+cp ./pattern-sorter /usr/local/bin/
 echo "Looking for learner.cfg"
 ls learner.cfg
 cp learner.cfg /etc/
