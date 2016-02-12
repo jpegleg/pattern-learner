@@ -1,5 +1,5 @@
 #!/bin/sh
-# Install pattern learner. The default pattern is Deny.
+# Install pattern learner.
 
 echo "Running as $(whoami)";
 echo "Setting up directories..."
