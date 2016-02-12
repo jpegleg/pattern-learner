@@ -1,16 +1,23 @@
 #!/bin/bash
-# Search for unique Deny message and report new messages.
+# Search for unique "$1" messages and report new messages.
 workdir=/var/tmp/learner/
 mkdir -p $workdir/ 2> /dev/null
 if [ -f $workdir/lock-deny-sorter ]; then
         exit 0
 else    
-        touch $workdir/lock-deny-sorter 
-        touch $workdir/deny.log $workdir/deny.last $workdir/deny.dat $workdir/lock.dat
+        touch "$wkdir"/lock-catalog-sorter;
+        touch "$wkdir"/catalog.log;
+        touch "$wkdir"/catalog.tmp;
+        touch "$wkdir"/catalog.archive;
+        touch "$wkdir"/catalog.last;
+        touch "$wkdir"/new.catalog;
+        touch /var/tmp/net.tmp;
+        touch /var/tmp/net.log;
+        touch /var/tmp/lock.dat;
         cp $workdir/deny.log $workdir/deny.last
         cat $workdir/deny.last >> $workdir/deny.archive
         sort -u $workdir/deny.archive > $workdir/deny.dat
-        grep Deny /var/log/net.log  > $workdir/deny.log
+        grep "$1" /var/log/net.log  > $workdir/deny.log
         sort -u $workdir/deny.log > $workdir/deny.tmp
         cp $workdir/deny.tmp $workdir/deny.log
         cp $workdir/deny.last $workdir/deny.in
