@@ -2,7 +2,7 @@
 # Search for unique "$1" messages and report new messages.
 workdir=/var/tmp/learner/
 mkdir -p $workdir/ 2> /dev/null
-if [ -f $workdir/lock-deny-sorter ]; then
+if [ -f $workdir/lock-inp-sorter ]; then
         exit 0
 else    
         touch "$wkdir"/lock-catalog-sorter;
@@ -14,14 +14,14 @@ else
         touch /var/tmp/net.tmp;
         touch /var/tmp/net.log;
         touch /var/tmp/lock.dat;
-        cp $workdir/deny.log $workdir/deny.last
-        cat $workdir/deny.last >> $workdir/deny.archive
-        sort -u $workdir/deny.archive > $workdir/deny.dat
-        grep "$1" /var/log/net.log  > $workdir/deny.log
-        sort -u $workdir/deny.log > $workdir/deny.tmp
-        cp $workdir/deny.tmp $workdir/deny.log
-        cp $workdir/deny.last $workdir/deny.in
-        cat $workdir/deny.archive |  while read line; do
+        cp $workdir/inp.log $workdir/inp.last
+        cat $workdir/inp.last >> $workdir/inp.archive
+        sort -u $workdir/inp.archive > $workdir/inp.dat
+        grep "$1" /var/log/net.log  > $workdir/inp.log
+        sort -u $workdir/inp.log > $workdir/inp.tmp
+        cp $workdir/inp.tmp $workdir/inp.log
+        cp $workdir/inp.last $workdir/inp.in
+        cat $workdir/inp.archive |  while read line; do
                 lock=$(echo "$line" | tr -cd '[[:alnum:]]._-' );
                 touch $workdir/"$lock".lock ;
                 echo "$line" > $workdir/"$lock".lock ;
@@ -31,9 +31,9 @@ else
         cp /var/log/net.tmp /var/log/net.log
         sort -u $workdir/lock.dat > $workdir/lock.dat.tmp
         cp $workdir/lock.dat./tmp $workdir/lock.dat
-        comm -23 /var/log/net.log $workdir/lock.dat | sort -u > $workdir/new.deny
-        cat $workdir/new.deny >> /var/log/new-deny.log
+        comm -23 /var/log/net.log $workdir/lock.dat | sort -u > $workdir/new.inp
+        cat $workdir/new.inp >> /var/log/new-inp.log
         cp $workdir/lock.dat /var/log/net.log
-        rm $workdir/lock-deny-sorter
+        rm $workdir/lock-inp-sorter
 fi
-ps aux | grep "/bin/bash /usr/local/bin/deny-sorter" | grep -v grep | awk '{print $2}' | xargs kill -9
+ps aux | grep "/bin/bash /usr/local/bin/inp-sorter" | grep -v grep | awk '{print $2}' | xargs kill -9
