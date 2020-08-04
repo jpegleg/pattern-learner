@@ -29,6 +29,6 @@ HOW TO INSTALL:
 Download all of the files and then run the installer:
 
 And run the install script:
-chmod +x ./pattern-learner-installer.sh
-sudo ./pattern-learner-installer.sh
+chmod +x ./install-learner.sh
+sudo ./install-learner.sh
 
