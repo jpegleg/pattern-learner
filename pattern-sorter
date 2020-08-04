@@ -1,5 +1,8 @@
 #!/bin/bash
 # Search for unique "$1" messages and report new messages.
+# an abomination of disk usage, and can be done in many better ways...
+# but this works in some cases.
+
 workdir=/var/tmp/learner/
 mkdir -p $workdir/ 2> /dev/null
 if [ -f $workdir/lock-inp-sorter ]; then
@@ -36,4 +39,6 @@ else
         cp $workdir/lock.dat /var/log/net.log
         rm $workdir/lock-inp-sorter
 fi
-ps aux | grep "/bin/bash /usr/local/bin/inp-sorter" | grep -v grep | awk '{print $2}' | xargs kill -9
+ps aux | grep "/bin/bash /usr/local/bin/inp-sorter" | grep -v grep | awk '{print $2}' | xargs kill -9 # thread management with fire? TODO proper lock files
+
+# what a wasteful script, but okay it can sort data in shell and has debugging built in with temporary files...
