@@ -5,15 +5,15 @@ echo "Running as $(whoami)";
 echo "Setting up directories..."
 mkdir -p /var/tmp/learner
 echo "Copying pattern-learner to /usr/local/bin"
-cp ./pattern-learner /usr/local/bin/
+cp ./pattern-learner /usr/local/bin/ || exit 1
 echo "Copying pattern-sorter to /usr/local/bin"
-cp ./pattern-sorter /usr/local/bin/
+cp ./pattern-sorter /usr/local/bin/ || exit 1
 echo "Looking for learner.cfg"
-ls learner.cfg
-cp learner.cfg /etc/
+ls learner.cfg || exit 1
+cp learner.cfg /etc/ || exit 1
 echo "Configured learner.cfg"
-ls learner-watcher.cfg
-cp learner-watcher.cfg /etc/
+ls learner-watcher.cfg || exit 1
+cp learner-watcher.cfg /etc/ || exit 1
 if [ $? -eq 0 ]; then
   echo "Located and install learner-watcher.cfg  as $(whoami)"
 else
