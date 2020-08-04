@@ -30,7 +30,7 @@ else
         sort -u /var/log/net.log > /var/log/net.tmp
         cp /var/log/net.tmp /var/log/net.log
         sort -u $workdir/lock.dat > $workdir/lock.dat.tmp
-        cp $workdir/lock.dat./tmp $workdir/lock.dat
+        cp $workdir/lock.dat.tmp $workdir/lock.dat
         comm -23 /var/log/net.log $workdir/lock.dat | sort -u > $workdir/new.inp
         cat $workdir/new.inp >> /var/log/new-inp.log
         cp $workdir/lock.dat /var/log/net.log
