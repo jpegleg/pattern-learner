@@ -36,4 +36,4 @@ sudo sec.pl --input=/var/log/new-inp.log --conf=/etc/learner-watcher.cfg --log=/
   ps -ef | grep "log=/var/tmp/learner/learner.log" | grep -v grep | awk '{print $2}' | tee /var/run/hist-event-reaction.pid
 fi
 
-~   
+ 
